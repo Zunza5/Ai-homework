@@ -1,6 +1,7 @@
 
 
-#Ai-Homework: N-Queens Problem SolversThis repository contains implementations of different Artificial Intelligence approaches to solve the classic **N-Queens Problem**. The project explores both search algorithms (A*) and Constraint Satisfaction Problems (CSP) using modern libraries.
+#Ai-Homework: N-Queens Problem Solvers
+This repository contains implementations of different Artificial Intelligence approaches to solve the classic **N-Queens Problem**. The project explores both search algorithms (A*) and Constraint Satisfaction Problems (CSP) using modern libraries.
 
 ##📋 Project DescriptionThe project is structured around a base class that defines the game rules, including two distinct solvers:
 
