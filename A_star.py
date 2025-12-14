@@ -1,5 +1,6 @@
 import queue
 from n_queens import n_queens
+import time
 
 class A_star:
     def __init__(self, start, problem):
@@ -10,6 +11,12 @@ class A_star:
         self.came_from = {}
         self.g_scores_cache = {}
         self.heuristic_cache = {}
+        self.node_expansions = 0
+        self.average_branching_factor = 0
+        self.max_branching_factor = 0
+        self.min_branching_factor = float('inf')
+        self.max_num_nodes_memory = 0
+        self.time_taken = 0
 
     def heuristic(self, state):
         if(state in self.heuristic_cache):
@@ -63,6 +70,7 @@ class A_star:
         return self.g_scores(g_score) + 1
     
     def a_star_search(self):
+        start_time = time.time()
         self.frontier.put((self.f_scores(self.start), self.start))
         self.came_from = {}
 
@@ -71,14 +79,23 @@ class A_star:
 
             self.problem.load_state([list(row) for row in current])
             if(self.problem.is_solved()):
+                self.average_branching_factor /= max(1, self.node_expansions)
+                self.time_taken = time.time() - start_time
                 return self.reconstruct_path(current)
             
+            self.node_expansions += 1
             self.explored.add(current)
 
             self.problem.load_state([list(row) for row in current])
             actions = self.problem.possible_actions()
             
+            branching_factor = len(actions)
+            self.average_branching_factor += branching_factor
+            self.max_branching_factor = max(self.max_branching_factor, branching_factor)
+            self.min_branching_factor = min(self.min_branching_factor, branching_factor)
+
             for action in actions:
+
                 row, col = action[0], action[1]
                 self.problem.load_state([list(row) for row in current])
                 new_state = self.problem.action(row, col)
@@ -90,12 +107,14 @@ class A_star:
                     self.g_scores_cache[child] = tentative_g_score
                     f = tentative_g_score + self.heuristic(child)
                     self.frontier.put((f, child))
+        
+            self.max_num_nodes_memory = max(self.max_num_nodes_memory, self.frontier.qsize() + len(self.explored))
                     
         return None 
 
     
 
-queens = n_queens(8)
+queens = n_queens(4)
 a_star_solver = A_star(queens.state, queens)
 solution_path = a_star_solver.a_star_search()
 if solution_path:
