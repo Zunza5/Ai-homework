@@ -46,7 +46,8 @@ pdm run python A_star.py
 
 *Output:* Prints the sequence of states from the initial configuration to the final solution.
 
-## 📂 File StructureHere is an overview of the main files in the repository:
+## 📂 File Structure
+Here is an overview of the main files in the repository:
 
 * **`n_queens.py`**: Defines the `n_queens` class. Handles the board, placement rules, conflict checking, and grid visualization. It is the base used by the other scripts.
 * **`csp.py`**: Implementation of the CSP solver. Maps the problem to Z3 integer variables and enforces constraints on rows, columns, and diagonals.
