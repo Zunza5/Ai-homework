@@ -30,7 +30,7 @@ pdm install
 ## Usage
 You can run the solvers or the experiment suites directly via Python (or `pdm run`).
 
-###1. Run Individual Solvers**CSP Solver (Z3)**
+### 1. Run Individual Solvers**CSP Solver (Z3)**
 Solves a single instance (default N=20).
 
 ```bash
@@ -46,7 +46,8 @@ pdm run python A_star.py
 
 ```
 
-###2. Run Performance Experiments**CSP Experiments**
+### 2. Run Performance Experiments
+**CSP Experiments**
 Runs the Z3 solver for N=4 to 19, collecting metrics like time, constraints, variable count, and propagations.
 
 ```bash
