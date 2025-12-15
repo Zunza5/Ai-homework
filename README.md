@@ -48,17 +48,17 @@ pdm run python A_star.py
 
 ### 2. Run Performance Experiments
 **CSP Experiments**
-Runs the Z3 solver for N=4 to 19, collecting metrics like time, constraints, variable count, and propagations.
+Runs the Z3 solver for N=4 to 19, collecting metrics like time, constraints, and propagations.
 
 ```bash
 pdm run python experiment_csp.py
 
 ```
 
-* **Output:** Generates `csp_z3_experiments.png` containing 9 plots (Execution Time, Constraints vs N, Propagations, etc.).
+* **Output:** Generates `csp_z3_experiments.png` containing 5 plots (Execution Time, Constraints vs N, Propagations, etc.).
 
 **A Experiments**
-Runs the A* algorithm for N=4 to 8. It tracks time, node expansions, memory usage, and branching factors.
+Runs the A* algorithm for N=4 to 7. It tracks time, node expansions, memory usage, and branching factors.
 
 ```bash
 pdm run python experiment_Astar.py
