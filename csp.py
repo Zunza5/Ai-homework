@@ -26,9 +26,9 @@ class z3_solver:
         self.time_taken = time.time() - start_time
         if solution == z3.sat:
             model = self.s.model()
-            for i in range(n_queens.n):
-                n_queens.state[i][model[self.vars[i]].as_long()] = 1
-            n_queens.print_grid()
+            for i in range(self.problem.n):
+                self.problem.state[i][model[self.vars[i]].as_long()] = 1
+            self.problem.print_grid()
         else:
             print("No solution found.")
 
