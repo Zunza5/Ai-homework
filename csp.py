@@ -31,3 +31,8 @@ class z3_solver:
             n_queens.print_grid()
         else:
             print("No solution found.")
+
+if __name__ == '__main__':
+    queens = n_queens(20)
+    csp_solver = z3_solver(queens)
+    csp_solver.print_solution()
