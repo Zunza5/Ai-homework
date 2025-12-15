@@ -75,10 +75,4 @@ pdm run python experiment_Astar.py
 * **`experiment_Astar.py`**: Benchmarking script for the A* solver.
 * **`pyproject.toml`**: Project configuration and dependency management.
 
-## Results
-The experiments generate visual insights into the algorithms' behavior:
-
-* **A Search:** Shows exponential growth in time and memory as N increases, highlighting the impact of the branching factor.
-* **CSP (Z3):** Demonstrates high efficiency for larger N, tracking metrics like constraint propagations and decisions.
-
 ## Author **Zualdi Luca** 
