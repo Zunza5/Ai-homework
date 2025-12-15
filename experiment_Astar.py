@@ -29,7 +29,7 @@ def run_experiment(n):
 
 if __name__ == '__main__':
     # Run experiments sequentially
-    n_values = range(4, 9)
+    n_values = range(4, 8)  # You can adjust the range as needed
     results = []
     
     for n in n_values:

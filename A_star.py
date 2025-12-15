@@ -22,31 +22,7 @@ class A_star:
         if(state in self.heuristic_cache):
             return self.heuristic_cache[state]
 
-        placed_queens = []
-        for r, row_data in enumerate(state):
-            if 1 in row_data:
-                c = row_data.index(1)
-                placed_queens.append((r, c))
-        
-        n = len(state) 
-        rows_populated = len(placed_queens)
-        
-        if rows_populated == n:
-            return 0
-
-        blocked_spots = 0
-        
-        for r in range(rows_populated, n):
-            for c in range(n):
-                is_attacked = False
-                for (qr, qc) in placed_queens:
-                    if c == qc or abs(r - qr) == abs(c - qc):
-                        is_attacked = True
-                        break
-                if is_attacked:
-                    blocked_spots += 1
-                    
-        return blocked_spots
+        return self.problem.conflicts()
     
     def f_scores(self, node):
         g_score = self.g_scores(node)
@@ -100,8 +76,7 @@ class A_star:
                 self.problem.load_state([list(row) for row in current])
                 new_state = self.problem.action(row, col)
                 child = tuple(tuple(row) for row in new_state)
-                self.came_from[child] = current
-                tentative_g_score = self.g_scores(child)
+                tentative_g_score = self.g_scores(current) + 1
                 if child not in self.g_scores_cache or tentative_g_score < self.g_scores_cache[child]:
                     self.came_from[child] = current
                     self.g_scores_cache[child] = tentative_g_score
@@ -112,15 +87,15 @@ class A_star:
                     
         return None 
 
-    
 
-queens = n_queens(4)
-a_star_solver = A_star(queens.state, queens)
-solution_path = a_star_solver.a_star_search()
-if solution_path:
-    for step in solution_path:
-        queens.load_state([list(row) for row in step])
-        queens.print_grid()
-        print()
-else:
-    print("No solution found.")
+if __name__ == '__main__':
+    queens = n_queens(4)
+    a_star_solver = A_star(queens.state, queens)
+    solution_path = a_star_solver.a_star_search()
+    if solution_path:
+        for step in solution_path:
+            queens.load_state([list(row) for row in step])
+            queens.print_grid()
+            print()
+    else:
+        print("No solution found.")

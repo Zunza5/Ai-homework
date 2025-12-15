@@ -96,18 +96,15 @@ if __name__ == '__main__':
     
     # Create plots
     if solved_csp:
-        fig, axes = plt.subplots(3, 3, figsize=(18, 14))
+        fig, axes = plt.subplots(3, 2, figsize=(14, 12))
         fig.suptitle('CSP (Z3) Solver Performance Analysis on N-Queens Problem', fontsize=16, fontweight='bold')
         
         csp_n = [r['n'] for r in solved_csp]
         csp_times = [r['time'] for r in solved_csp]
-        csp_constraints = [r['num_constraints'] for r in solved_csp]
-        csp_variables = [r['num_variables'] for r in solved_csp]
         csp_decisions = [r['decisions'] for r in solved_csp]
         csp_propagations = [r['propagations'] for r in solved_csp]
         csp_conflicts = [r['conflicts'] for r in solved_csp]
         csp_mk_bool = [r['mk_bool_var'] for r in solved_csp]
-        csp_case_split = [r['case_split'] for r in solved_csp]
         
         # 1. Time plot
         axes[0, 0].plot(csp_n, csp_times, marker='s', linewidth=2.5, color='red', markersize=8)
@@ -116,63 +113,36 @@ if __name__ == '__main__':
         axes[0, 0].set_title('Execution Time vs N')
         axes[0, 0].grid(True, alpha=0.3)
         
-        # 2. Constraints plot
-        axes[0, 1].plot(csp_n, csp_constraints, marker='o', linewidth=2.5, color='blue', markersize=8)
+        # 2. Boolean variables plot
+        axes[0, 1].plot(csp_n, csp_mk_bool, marker='o', linewidth=2.5, color='blue', markersize=8)
         axes[0, 1].set_xlabel('N (Board Size)', fontsize=11)
-        axes[0, 1].set_ylabel('Number of Constraints', fontsize=11)
-        axes[0, 1].set_title('Constraints vs N')
+        axes[0, 1].set_ylabel('Number of boolean variables', fontsize=11)
+        axes[0, 1].set_title('Boolean Variables vs N')
         axes[0, 1].grid(True, alpha=0.3)
         
-        # 3. Variables plot
-        axes[0, 2].plot(csp_n, csp_variables, marker='^', linewidth=2.5, color='green', markersize=8)
-        axes[0, 2].set_xlabel('N (Board Size)', fontsize=11)
-        axes[0, 2].set_ylabel('Number of Variables', fontsize=11)
-        axes[0, 2].set_title('Variables vs N')
-        axes[0, 2].grid(True, alpha=0.3)
-        
-        # 4. Decisions plot
+        # 3. Decisions plot
         axes[1, 0].plot(csp_n, csp_decisions, marker='d', linewidth=2.5, color='orange', markersize=8)
         axes[1, 0].set_xlabel('N (Board Size)', fontsize=11)
         axes[1, 0].set_ylabel('Number of Decisions', fontsize=11)
         axes[1, 0].set_title('Solver Decisions vs N')
         axes[1, 0].grid(True, alpha=0.3)
         
-        # 5. Propagations plot
+        # 4. Propagations plot
         axes[1, 1].plot(csp_n, csp_propagations, marker='*', linewidth=2.5, color='purple', markersize=12)
         axes[1, 1].set_xlabel('N (Board Size)', fontsize=11)
         axes[1, 1].set_ylabel('Number of Propagations', fontsize=11)
         axes[1, 1].set_title('Constraint Propagations vs N')
         axes[1, 1].grid(True, alpha=0.3)
         
-        # 6. Conflicts plot
-        axes[1, 2].plot(csp_n, csp_conflicts, marker='v', linewidth=2.5, color='brown', markersize=8)
-        axes[1, 2].set_xlabel('N (Board Size)', fontsize=11)
-        axes[1, 2].set_ylabel('Number of Conflicts', fontsize=11)
-        axes[1, 2].set_title('Conflicts Detected vs N')
-        axes[1, 2].grid(True, alpha=0.3)
-        
-        # 7. Time per constraint (efficiency)
-        time_per_constraint = [r['time'] / r['num_constraints'] if r['num_constraints'] > 0 else 0 
-                               for r in solved_csp]
-        axes[2, 0].plot(csp_n, time_per_constraint, marker='p', linewidth=2.5, color='cyan', markersize=8)
+        # 5. Conflicts plot
+        axes[2, 0].plot(csp_n, csp_conflicts, marker='v', linewidth=2.5, color='brown', markersize=8)
         axes[2, 0].set_xlabel('N (Board Size)', fontsize=11)
-        axes[2, 0].set_ylabel('Time per Constraint (ms)', fontsize=11)
-        axes[2, 0].set_title('Efficiency: Time/Constraint')
+        axes[2, 0].set_ylabel('Number of Conflicts', fontsize=11)
+        axes[2, 0].set_title('Conflicts Detected vs N')
         axes[2, 0].grid(True, alpha=0.3)
         
-        # 8. Boolean variables created
-        axes[2, 1].plot(csp_n, csp_mk_bool, marker='x', linewidth=2.5, color='magenta', markersize=8)
-        axes[2, 1].set_xlabel('N (Board Size)', fontsize=11)
-        axes[2, 1].set_ylabel('Boolean Variables Created', fontsize=11)
-        axes[2, 1].set_title('Boolean Variables vs N')
-        axes[2, 1].grid(True, alpha=0.3)
-        
-        # 9. Case splits (branching)
-        axes[2, 2].plot(csp_n, csp_case_split, marker='H', linewidth=2.5, color='teal', markersize=8)
-        axes[2, 2].set_xlabel('N (Board Size)', fontsize=11)
-        axes[2, 2].set_ylabel('Case Splits', fontsize=11)
-        axes[2, 2].set_title('Case Splits (Branching) vs N')
-        axes[2, 2].grid(True, alpha=0.3)
+        # Hide the unused subplot
+        axes[2, 1].axis('off')
         
         plt.tight_layout()
         plt.savefig('csp_z3_experiments.png', dpi=300, bbox_inches='tight')
